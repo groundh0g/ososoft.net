@@ -1,3 +1,0 @@
----
----
-{% include jaytch/snips/search-json.liquid posts=site.posts %}
