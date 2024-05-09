@@ -3,7 +3,7 @@ const environmentSpecificVariables = {
     url: 'http://localhost:8080',
   },
   production: {
-    url: 'https://faux.cab',
+    url: 'https://ososoft.net',
   },
 };
 
@@ -25,8 +25,8 @@ const fonticons = {
   },
 };
 
-const SITE_TITLE = 'faux.cab';
-const SITE_EMAIL = 'hello@faux.cab';
+const SITE_TITLE = 'Ososoft, LLC';
+const SITE_EMAIL = 'hello@ososoft.net';
 
 const navbar = {
   // `icon` is the class name for your icon set
@@ -97,7 +97,7 @@ module.exports = {
   title: SITE_TITLE,
   author: 'Joseph B. Hall (@groundh0g)',
   email: SITE_EMAIL,
-  description: 'A site to store my terrible puns.',
+  description: 'My Georgia consulting company.',
   keywords: [],
   language: 'en-US',
   favicon: {
