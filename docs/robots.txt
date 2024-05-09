@@ -1,2 +1,2 @@
 User-agent: *
-Sitemap: https://faux.cab/sitemap.xml
+Sitemap: https://ososoft.net/sitemap.xml
