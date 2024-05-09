@@ -1,0 +1,12 @@
+<div class="footer">
+  <div class="footer-center">
+    Copyright &copy; 2016-<span id="thisYear">2024</span>, Joseph B. Hall.
+  </div>
+  <script type="application/javascript">
+    (() => {
+      window.onload = (ev) => {
+        document.querySelector('#thisYear').innerHTML = new Date().getFullYear();
+      };
+    })();
+  </script>
+</div>

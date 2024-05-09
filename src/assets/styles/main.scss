@@ -1,0 +1,271 @@
+@use "global/reset";
+
+html,
+body,
+.outer {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  color: black;
+  background-color: lightsteelblue;
+  height: 100vh;
+  width: 100vw;
+}
+
+a:link,
+a:visited,
+a:hover,
+a:active {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+a:hover {
+  color: dimgray;
+}
+
+a:link.header-link,
+a:visited.header-link,
+a:hover.header-link,
+a:active.header-link {
+  color: darkgray;
+}
+
+a:active.header-link,
+a:hover.header-link {
+  color: black;
+}
+
+a:link.external-link,
+a:visited.external-link,
+a:hover.external-link,
+a:active.external-link {
+  // nothing to do here
+}
+
+a:hover.external-link,
+a:active.external-link {
+  opacity: 0.66;
+}
+
+.float-clear {
+  clear: both;
+}
+
+.navbar-icon {
+  height: 1em;
+  margin-top: 0.333em;
+  margin-bottom: -0.1em;
+  margin-left: 0.5em;
+}
+
+.navbar {
+  width: 100%;
+  height: 2em;
+  line-height: 2em;
+  font-size: 1.5em;
+
+  i {
+    margin: 0 0.3em;
+  }
+
+  .nav-left {
+    float: left;
+    margin-left: 1em;
+  }
+
+  .nav-right {
+    float: right;
+    margin-right: 1em;
+  }
+}
+
+.footer {
+  height: 2em;
+  line-height: 2em;
+  width: 100%;
+  font-weight: bolder;
+  text-align: center;
+}
+
+.outer-full-page {
+  .footer {
+    height: 2em;
+    line-height: 2em;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    font-weight: bolder;
+    text-align: center;
+  }
+}
+
+.full-page-content {
+  position: absolute;
+  top: 2.5em;
+  bottom: 2em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+
+  img {
+    width: 100%;
+    max-width: 1024px;
+  }
+}
+
+h2 {
+  display: block;
+  border-bottom: 1px solid black;
+}
+
+.content {
+  display: block;
+  margin: 0 10vw;
+}
+
+.paragraph-image {
+  float: left;
+  margin-bottom: 1vmin;
+  margin-right: 2vmin;
+  width: 10vw;
+  min-width: 96px;
+}
+
+.camps-wrapper {
+  display: block;
+  margin: 1vw 0;
+  padding: 1vw;
+  background-color: beige;
+  color: black;
+  border: 1px solid black;
+  border-radius: 2vw;
+
+  h2 {
+    text-align: center;
+  }
+}
+
+.camps-content {
+  display: block;
+  padding: 1vw;
+}
+
+.camps-peeps {
+  padding: 10px;
+  display: block;
+}
+
+.camps-peep {
+  padding: 10px;
+  float: left;
+  text-align: center;
+
+  img {
+    border-radius: 50%;
+    width: 128px;
+  }
+}
+
+.camps-description {
+  // clear: both;
+  float: left;
+  display: block;
+}
+
+.camps-detail {
+  float: left;
+}
+
+.camps-pics {
+  display: inline-block;
+  margin: -15px 5px 5px 20px;
+  float: right;
+  text-align: center;
+  font-size: 1.3em;
+}
+
+.camps-break {
+  clear: both;
+}
+
+@media (max-width: 580px) {
+  br.camps-break {
+    display: none;
+  }
+
+  .camps-detail {
+    float: none;
+  }
+
+  .camps-pics {
+    float: none;
+    clear: both;
+
+    img {
+      width: 65vw;
+    }
+  }
+
+  .camps-peep {
+    padding: 5px;
+  }
+
+  .content-empty-paragraph {
+    display: none;
+  }
+
+  .camps-description {
+    text-align: center;
+  }
+}
+
+@media (max-width: 365px) {
+  .camps-wrapper {
+    text-align: justify;
+    padding: 0 10px;
+  }
+
+  .camps-peep {
+    float: none;
+  }
+}
+
+.camps-action,
+.camps-action-wide {
+  clear: both;
+  display: inline-block;
+  background-color: steelblue;
+  color: white;
+  border-radius: 6px;
+  min-width: 4em;
+  min-height: 2em;
+  line-height: 2em;
+
+  a:link,
+  a:visited,
+  a:hover,
+  a:active {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  a:hover {
+    color: palegoldenrod;
+  }
+}
+
+.camps-action-wide {
+  min-width: 8em;
+}
+
+.hidden {
+  display: none;
+}

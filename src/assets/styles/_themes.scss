@@ -1,0 +1,191 @@
+@use "sass:color";
+
+$themes: (
+  light: (
+    primary: black,
+    primary-bg: whitesmoke,
+    secondary: black,
+    secondary-bg: palegoldenrod,
+    tertiary: black,
+    tertiary-bg: lightgray,
+    text: #000,
+    text-bg: #fff,
+    link: blue,
+    link-underline: 2px dotted blue,
+    hover: blueviolet,
+    hover-underline: 2px dotted blueviolet,
+  ),
+  dark: (
+    primary: aliceblue,
+    primary-bg: dimgray,
+    secondary: white,
+    secondary-bg: black,
+    tertiary: black,
+    tertiary-bg: darkgray,
+    text: #fff,
+    text-bg: #000,
+    link: orange,
+    link-underline: 2px dotted orange,
+    hover: cornflowerblue,
+    hover-underline: 2px dotted cornflowerblue,
+  ),
+);
+
+@function color-difference($foreground, $background) {
+  $r: max(color.red($foreground), color.red($background)) - min(color.red($foreground), color.red($background));
+  $g: max(color.green($foreground), color.green($background)) - min(color.green($foreground), color.green($background));
+  $b: max(color.blue($foreground), color.blue($background)) - min(color.blue($foreground), color.blue($background));
+  $sum-rgb: $r + $g + $b;
+
+  @if $sum-rgb < 500 {
+    @return "false";
+  } @else {
+    @return "true";
+  }
+}
+
+@function contrasting-color($color) {
+  $inverted: color.complement($color);
+
+  @if color-difference($inverted, $color) == "false" {
+    @if color.lightness($color) < 67% {
+      $inverted: white;
+    } @else if color.lightness($color) > 75% {
+      $inverted: black;
+    }
+  }
+
+  @if $force-black-and-white-text == true {
+    $lightness: color.lightness($inverted);
+    @if color.lightness($inverted) >= 50% {
+      $inverted: white;
+    } @else {
+      $inverted: black;
+    }
+
+    @if color-difference($inverted, $color) == "false" {
+      // $inverted: color.invert($inverted);
+    }
+  }
+
+  @return $inverted;
+}
+
+// light defaults
+$light-link: steelblue;
+$light-info: lightskyblue;
+$light-warning: gold;
+$light-success: mediumseagreen;
+$light-danger: indianred;
+
+// dark defaults
+$dark-link: lightsteelblue;
+$dark-info: steelblue;
+$dark-warning: darkgoldenrod;
+$dark-success: seagreen;
+$dark-danger: darkred;
+
+$force-black-and-white-text: true;
+
+$base-palettes: (
+  red: (color-bg: indianred),
+  orange: (color-bg: darkorange),
+  yellow: (color-bg: palegoldenrod),
+  green: (color-bg: seagreen),
+  blue: (color-bg: steelblue),
+  purple: (color-bg: blueviolet),
+  pink: (color-bg: violet),
+  cornflower: (color-bg: cornflowerblue),
+  brown: (color-bg: saddlebrown),
+  tan: (color-bg: wheat),
+  gold: (color-bg: gold),
+  goldenrod: (color-bg: goldenrod),
+  navi: (color-bg: navy),
+  lime: (color-bg: yellowgreen),
+  teal: (color-bg: teal),
+  peach: (color-bg: #ffcb4a),
+  lavender: (color-bg: #dbc4f2),
+  olive: (color-bg: olive),
+);
+
+@each $palette, $map in $base-palettes {
+  $key: "#{$palette}ly";
+  $color: map.get($map, color-bg);
+
+  $primary: $color;
+  $secondary: color.complement($color);
+  $tertiary: color.adjust($color, $hue: 60deg); // color.invert($color);
+
+  $value: (
+    primary: contrasting-color($primary),
+    primary-bg: $primary,
+    secondary: contrasting-color($secondary),
+    secondary-bg: $secondary,
+    tertiary: contrasting-color($tertiary),
+    tertiary-bg: $tertiary,
+    text: color.scale(color.invert($color), $lightness: 8%),
+    text-bg: color.scale($color, $lightness: -8%),
+    link: color.scale($color, $lightness: 12%),
+    link-underline: 2px dotted,
+    hover: color.scale($color, $lightness: -12%),
+    hover-underline: 2px dotted,
+  );
+  $themes: map.merge($themes, ($key: $value));
+}
+
+@mixin themed() {
+  @each $theme, $map in $themes {
+
+    .theme-#{$theme} {
+      $theme-map: () !global;
+      @each $key, $submap in $map {
+        $value: map.get(map.get($themes, $theme), "#{$key}");
+        $theme-map: map.merge($theme-map, ($key: $value)) !global;
+      }
+
+      .title::after {
+        content: "#{$theme}";
+      }
+
+      .title {
+        text-transform: capitalize;
+        color: black;
+        background-color: white;
+      }
+
+      .primary {
+        color: map.get(map.get($themes, $theme), "primary");
+        background-color: map.get(map.get($themes, $theme), "primary-bg");
+      }
+
+      .secondary {
+        color: map.get(map.get($themes, $theme), "secondary");
+        background-color: map.get(map.get($themes, $theme), "secondary-bg");
+      }
+
+      .tertiary {
+        color: map.get(map.get($themes, $theme), "tertiary");
+        background-color: map.get(map.get($themes, $theme), "tertiary-bg");
+      }
+
+      a:link,
+      a:visited,
+      a:active {
+        color: map.get(map.get($themes, $theme), "link");
+        border-bottom: map.get(map.get($themes, $theme), "link-underline");
+      }
+
+      a:hover {
+        color: map.get(map.get($themes, $theme), "hover");
+        border-bottom: map.get(map.get($themes, $theme), "hover-underline");
+      }
+
+      @content;
+      $theme-map: null !global;
+    }
+  }
+}
+
+@function t($key) {
+  @return map.get($theme-map, $key);
+}
